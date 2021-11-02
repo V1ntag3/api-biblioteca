@@ -18,29 +18,23 @@ import br.ufpi.repositorio.RepositorioDeLivrosEmMemoria;
 
 @Path("livro")
 public class LivroResource {
-	
 	RepositorioDeLivros repositorio = new RepositorioDeLivrosEmMemoria();
-	
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response cadastrar(Livro livro) {
 		repositorio.cadastrar(livro);
-		return Response.status(Status.CREATED).entity(livro).build();
+		return Response.status(Status.CREATED).entity(livro).build();// resposta
 	}
-	
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listar(@QueryParam("nome") String nome) {
-		if(nome != null) {
+		if(nome!=null) {
 			Livro livro = repositorio.buscar(nome);
 			return Response.status(Status.OK).entity(livro).build();
-		}else {
-			List<Livro> livros = repositorio.listar();
-			return Response.status(Status.OK).entity(livros).build();
 		}
-		
+		List<Livro> livros = repositorio.listar();
+		return Response.status(Status.OK).entity(livros).build();
 	}
 }
